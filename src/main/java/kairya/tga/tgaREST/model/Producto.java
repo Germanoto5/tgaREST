@@ -41,6 +41,8 @@ public class Producto implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
+    @Column(name = "urlimagen")
+    private String urlImagen;
     @Lob
     @Column(name = "descripcion")
     private String descripcion;
@@ -129,5 +131,13 @@ public class Producto implements Serializable {
     public String toString() {
         return "kairya.tga.tgaREST.model.Producto[ id=" + id + " ]";
     }
+
+	public String getUrlImagen() {
+		return urlImagen;
+	}
+
+	public void setUrlImagen(String urlImagen) {
+		this.urlImagen = urlImagen;
+	}
     
 }
