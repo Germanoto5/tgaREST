@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kairya.tga.tgaREST.dto.CategoriaDto;
+import kairya.tga.tgaREST.dto.OfertaDto;
 import kairya.tga.tgaREST.dto.ProductoDto;
 import kairya.tga.tgaREST.model.Categoria;
+import kairya.tga.tgaREST.model.Oferta;
 import kairya.tga.tgaREST.model.Producto;
 import kairya.tga.tgaREST.serviceimp.CategoriaServiceImp;
+import kairya.tga.tgaREST.serviceimp.OfertaServiceImp;
 import kairya.tga.tgaREST.serviceimp.ProductoServiceImp;
 
 @RestController
@@ -26,6 +29,9 @@ public class TgaController {
 	
 	@Autowired
 	private ProductoServiceImp productoService;
+	
+	@Autowired
+	private OfertaServiceImp ofertaService;
 	
 	@GetMapping("/categoria/{id}")
 	public ResponseEntity<CategoriaDto> findCategoria(@PathVariable int id){
@@ -75,6 +81,22 @@ public class TgaController {
 		}
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		
+	}
+	@GetMapping("/oferta/{id}")
+	public ResponseEntity<OfertaDto> findOferta(@PathVariable int id){
+		OfertaDto oferta = new OfertaDto(ofertaService.findOferta(id));
+		return new ResponseEntity<>(oferta, HttpStatus.OK);
+	}
+	
+	@GetMapping("/ofertas")
+	public ResponseEntity<ArrayList<OfertaDto>> listOfertas(){
+		ArrayList<Oferta> ofertas = ofertaService.listOfertas();
+		ArrayList<OfertaDto> ofertasDto = new ArrayList<OfertaDto>();
+		for(Oferta oferta : ofertas) {
+			OfertaDto ofertaDto = new OfertaDto(oferta);
+			ofertasDto.add(ofertaDto);
+		}
+		return new ResponseEntity<>(ofertasDto, HttpStatus.OK);
 	}
 
 }

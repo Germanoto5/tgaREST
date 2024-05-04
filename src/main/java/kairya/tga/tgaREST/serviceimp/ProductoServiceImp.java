@@ -32,7 +32,7 @@ public class ProductoServiceImp implements IProductoService{
 	@Override
 	public ArrayList<Producto> listProductosByCategorias(Categoria categoria) {
 		// TODO Auto-generated method stub
-		return (ArrayList<Producto>) repository.findByCategoria(categoria);
+		return (ArrayList<Producto>) repository.findByCategoria(categoria.getId());
 	}
 
 }
