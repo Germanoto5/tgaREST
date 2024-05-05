@@ -7,3 +7,4 @@ import kairya.tga.tgaREST.model.Categoria;
 
 @Repository
 public interface ICategoriaRepository extends JpaRepository<Categoria , Integer>{}
+

@@ -21,8 +21,8 @@ import kairya.tga.tgaREST.serviceimp.OfertaServiceImp;
 import kairya.tga.tgaREST.serviceimp.ProductoServiceImp;
 
 @RestController
-@RequestMapping("api/tga")
-public class TgaController {
+@RequestMapping("tga/common/api/read")
+public class TgaPublicController {
 	
 	@Autowired
 	private CategoriaServiceImp categoriaService;

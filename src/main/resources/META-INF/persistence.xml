@@ -6,6 +6,7 @@
     <class>kairya.tga.tgaREST.model.Usuario</class>
     <class>kairya.tga.tgaREST.model.Categoria</class>
     <class>kairya.tga.tgaREST.model.Producto</class>
+    <class>kairya.tga.tgaREST.model.Usuarios</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/tga_db?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
