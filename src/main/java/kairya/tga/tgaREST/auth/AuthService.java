@@ -1,6 +1,9 @@
 package kairya.tga.tgaREST.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +24,17 @@ public class AuthService {
 	private final JwtService jwtService;
 
 	private final PasswordEncoder passwordEncoder;
+
+	private final AuthenticationManager authenticationManager;
 	
-	public AuthResponse login() {
-		// TODO Auto-generated method stub
-		return null;
+	public AuthResponse login(LoginRequest request) {
+		UsernamePasswordAuthenticationToken a = new UsernamePasswordAuthenticationToken(request.getCorreo(), request.getContrasenia());
+		authenticationManager.authenticate(a);
+		UserDetails usuario = repository.findByCorreo(request.getCorreo()).orElseThrow();
+		String token = jwtService.getToken(usuario);
+		return AuthResponse.builder()
+		.token(token)
+		.build();
 	}
 
 	public AuthResponse register(RegisterRequest request) {

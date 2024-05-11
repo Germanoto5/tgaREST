@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("tga/common/api/login")
+@RequestMapping("tga/common/api/user")
 @RequiredArgsConstructor
 public class UserController {
 	
@@ -17,7 +17,7 @@ public class UserController {
 	
 	@PostMapping(value = "login")
 	public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
-		return ResponseEntity.ok(authService.login());
+		return ResponseEntity.ok(authService.login(request));
 	}
 	
 	@PostMapping(value = "register")

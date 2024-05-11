@@ -40,13 +40,11 @@ public class Usuario implements UserDetails{
 	}
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.contrasenia;
 	}
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.correo;
 	}
 	@Override
 	public boolean isAccountNonExpired() {
