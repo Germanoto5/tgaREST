@@ -1,4 +1,4 @@
-package kairya.tga.tgaREST.auth;
+package kairya.tga.tgaREST.errorHandler;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthResponse {
-	String token;
-	String message;
+public class ErrorResponse {
+    String message;
+    int status;
 }

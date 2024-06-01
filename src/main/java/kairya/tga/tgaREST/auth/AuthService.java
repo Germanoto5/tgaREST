@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import kairya.tga.tgaREST.errorHandler.AuthenticationException;
+import kairya.tga.tgaREST.errorHandler.UserRegistrationException;
 import kairya.tga.tgaREST.jwt.JwtService;
 import kairya.tga.tgaREST.model.Rol;
 import kairya.tga.tgaREST.model.Usuario;
@@ -28,17 +30,28 @@ public class AuthService {
 	private final AuthenticationManager authenticationManager;
 	
 	public AuthResponse login(LoginRequest request) {
-		UsernamePasswordAuthenticationToken a = new UsernamePasswordAuthenticationToken(request.getCorreo(), request.getContrasenia());
-		authenticationManager.authenticate(a);
-		UserDetails usuario = repository.findByCorreo(request.getCorreo()).orElseThrow();
+		try {
+            UsernamePasswordAuthenticationToken a = new UsernamePasswordAuthenticationToken(request.getCorreo(), request.getContrasenia());
+			authenticationManager.authenticate(a);
+        } catch (Exception e) {
+            throw new AuthenticationException("El correo o la contraseña són incorrectos");
+        }
+		
+		UserDetails usuario = repository.findByCorreo(request.getCorreo()).orElseThrow(() -> new AuthenticationException("Usuario no encontrado")) ;
 		String token = jwtService.getToken(usuario);
 		return AuthResponse.builder()
 		.token(token)
+		.message("Login succesfull")
 		.build();
 	}
 
 	public AuthResponse register(RegisterRequest request) {
-		// TODO Auto-generated method stub
+		if (repository.findByCorreo(request.getCorreo()).isPresent()) {
+            throw new UserRegistrationException("El correo está en uso");
+        }
+		if(request.getContrasenia().length() < 8){
+			throw new UserRegistrationException("Contraseña con poca longitud");
+		}
 		Usuario usuario = Usuario.builder()
 				.correo(request.getCorreo())
 				.contrasenia(passwordEncoder.encode(request.getContrasenia()))
