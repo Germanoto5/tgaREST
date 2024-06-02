@@ -44,9 +44,8 @@ public class Producto implements Serializable {
     @Column(name = "urlimagen")
     private String urlImagen;
     @Lob
-    @Column(name = "descripcion")
-    private String descripcion;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "ingredientes")
+    private String ingredientes;
     @Basic(optional = false)
     @Column(name = "precio")
     private BigDecimal precio;
@@ -83,12 +82,12 @@ public class Producto implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getIngredientes() {
+        return ingredientes;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setIngredientes(String ingredientes) {
+        this.ingredientes = ingredientes;
     }
 
     public BigDecimal getPrecio() {

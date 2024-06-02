@@ -1,6 +1,7 @@
 package kairya.tga.tgaREST.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-	
 
 	@Autowired
 	private final IUsuarioRepository repository;
@@ -28,28 +28,30 @@ public class AuthService {
 	private final PasswordEncoder passwordEncoder;
 
 	private final AuthenticationManager authenticationManager;
-	
+
 	public AuthResponse login(LoginRequest request) {
 		try {
-            UsernamePasswordAuthenticationToken a = new UsernamePasswordAuthenticationToken(request.getCorreo(), request.getContrasenia());
+			UsernamePasswordAuthenticationToken a = new UsernamePasswordAuthenticationToken(request.getCorreo(),
+					request.getContrasenia());
 			authenticationManager.authenticate(a);
-        } catch (Exception e) {
-            throw new AuthenticationException("El correo o la contraseña són incorrectos");
-        }
-		
-		UserDetails usuario = repository.findByCorreo(request.getCorreo()).orElseThrow(() -> new AuthenticationException("Usuario no encontrado")) ;
+		} catch (Exception e) {
+			throw new AuthenticationException("El correo o la contraseña són incorrectos.");
+		}
+
+		UserDetails usuario = repository.findByCorreo(request.getCorreo())
+				.orElseThrow(() -> new AuthenticationException("Usuario no encontrado"));
 		String token = jwtService.getToken(usuario);
 		return AuthResponse.builder()
-		.token(token)
-		.message("Login succesfull")
-		.build();
+				.token(token)
+				.message("Login succesfull")
+				.build();
 	}
 
-	public AuthResponse register(RegisterRequest request) {
+	public RegisterResponse register(RegisterRequest request) {
 		if (repository.findByCorreo(request.getCorreo()).isPresent()) {
-            throw new UserRegistrationException("El correo está en uso");
-        }
-		if(request.getContrasenia().length() < 8){
+			throw new UserRegistrationException("El correo está en uso");
+		}
+		if (request.getContrasenia().length() < 8) {
 			throw new UserRegistrationException("Contraseña con poca longitud");
 		}
 		Usuario usuario = Usuario.builder()
@@ -59,11 +61,12 @@ public class AuthService {
 				.apellidos(request.getApellidos())
 				.rol(Rol.USER)
 				.build();
-		
+
 		repository.save(usuario);
-		return AuthResponse.builder()
-			.token(jwtService.getToken(usuario))
-			.build();
+		return RegisterResponse.builder()
+				.message("Sign in succesfull")
+				.statusCode(HttpStatus.CREATED.value())
+				.build();
 	}
 
 }

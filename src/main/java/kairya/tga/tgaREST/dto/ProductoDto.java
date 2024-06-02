@@ -8,7 +8,7 @@ public class ProductoDto {
 	private Integer id;
     private String nombre;
     private String urlImagen;
-    private String descripcion;
+    private String ingredientes;
     private BigDecimal precio;
     private CategoriaDto idCategoria;
     
@@ -16,7 +16,7 @@ public class ProductoDto {
     	this.id = producto.getId();
     	this.nombre = producto.getNombre();
     	this.urlImagen = producto.getUrlImagen();
-    	this.descripcion = producto.getDescripcion();
+    	this.ingredientes = producto.getIngredientes();
     	this.precio = producto.getPrecio();
     	this.idCategoria = new CategoriaDto(producto.getIdCategoria());
     }
@@ -39,11 +39,11 @@ public class ProductoDto {
 	public void setUrlImagen(String urlImagen) {
 		this.urlImagen = urlImagen;
 	}
-	public String getDescripcion() {
-		return descripcion;
+	public String getIngredientes() {
+		return ingredientes;
 	}
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setIngredientes(String ingredientes) {
+		this.ingredientes = ingredientes;
 	}
 	public BigDecimal getPrecio() {
 		return precio;
