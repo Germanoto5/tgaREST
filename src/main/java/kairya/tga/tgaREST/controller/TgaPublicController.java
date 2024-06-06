@@ -1,6 +1,7 @@
 package kairya.tga.tgaREST.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,8 @@ public class TgaPublicController {
 	
 	@Autowired
 	private OfertaServiceImp ofertaService;
+
+	HashMap<String, Object> body = new HashMap<String, Object>();
 	
 	@GetMapping("/categoria/{id}")
 	public ResponseEntity<CategoriaDto> findCategoria(@PathVariable int id){
@@ -40,14 +43,15 @@ public class TgaPublicController {
 	}
 	
 	@GetMapping("/categorias")
-	public ResponseEntity<ArrayList<CategoriaDto>> listCategorias(){
+	public ResponseEntity<HashMap<String,Object>> listCategorias(){
 		ArrayList<Categoria> categorias = categoriaService.listCategorias();
 		ArrayList<CategoriaDto> categoriasDto = new ArrayList<CategoriaDto>();
 		for(Categoria categoria : categorias) {
 			CategoriaDto categoriaDto = new CategoriaDto(categoria);
 			categoriasDto.add(categoriaDto);
 		}
-		return new ResponseEntity<>(categoriasDto, HttpStatus.OK);
+		body.put("data", categoriasDto);
+		return new ResponseEntity<>(body, HttpStatus.OK);
 	}
 	
 	@GetMapping("/producto/{id}")
@@ -67,7 +71,7 @@ public class TgaPublicController {
 		return new ResponseEntity<>(productosDto, HttpStatus.OK);
 	}
 	@GetMapping("/productos/categoria/{idCategoria}")
-	public ResponseEntity<ArrayList<ProductoDto>> listProductosByCategorias(@PathVariable int idCategoria){
+	public ResponseEntity<HashMap<String,Object>> listProductosByCategorias(@PathVariable int idCategoria){
 		Categoria categoria = categoriaService.findCategoria(idCategoria);
 		
 		if(categoria != null && categoria.getId()!=null) {
@@ -77,10 +81,10 @@ public class TgaPublicController {
 				ProductoDto productoDto = new ProductoDto(producto);
 				productosDto.add(productoDto);
 			}
-			return new ResponseEntity<>(productosDto, HttpStatus.OK);
+			body.put("data", productosDto);
+			return new ResponseEntity<>(body, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		
 	}
 	@GetMapping("/oferta/{id}")
 	public ResponseEntity<OfertaDto> findOferta(@PathVariable int id){
@@ -89,14 +93,15 @@ public class TgaPublicController {
 	}
 	
 	@GetMapping("/ofertas")
-	public ResponseEntity<ArrayList<OfertaDto>> listOfertas(){
+	public ResponseEntity<HashMap<String,Object>> listOfertas(){
 		ArrayList<Oferta> ofertas = ofertaService.listOfertas();
 		ArrayList<OfertaDto> ofertasDto = new ArrayList<OfertaDto>();
 		for(Oferta oferta : ofertas) {
 			OfertaDto ofertaDto = new OfertaDto(oferta);
 			ofertasDto.add(ofertaDto);
 		}
-		return new ResponseEntity<>(ofertasDto, HttpStatus.OK);
+		body.put("data", ofertasDto);
+		return new ResponseEntity<>(body, HttpStatus.OK);
 	}
 
 }

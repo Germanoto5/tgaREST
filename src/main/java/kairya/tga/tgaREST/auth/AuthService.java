@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +37,7 @@ public class AuthService {
 			throw new AuthenticationException("El correo o la contraseña són incorrectos.");
 		}
 
-		UserDetails usuario = repository.findByCorreo(request.getCorreo())
+		Usuario usuario = repository.findByCorreo(request.getCorreo())
 				.orElseThrow(() -> new AuthenticationException("Usuario no encontrado"));
 		String token = jwtService.getToken(usuario);
 		return AuthResponse.builder()

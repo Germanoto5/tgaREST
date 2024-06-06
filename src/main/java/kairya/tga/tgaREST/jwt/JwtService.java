@@ -14,6 +14,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import kairya.tga.tgaREST.model.Usuario;
 
 
 @Service
@@ -22,12 +23,14 @@ public class JwtService {
     private static final String SECRET_KEY = "1nn6FLCOuSAnzUsob9lSsBq5z2gTbhoz-ygO2jRvILU";
 
     public String getToken(UserDetails user) {
-        // TODO Auto-generated method stub
-        return getToken(new HashMap<>(), user);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("nombre", ((Usuario) user).getNombre());
+        claims.put("apellidos", ((Usuario) user).getApellidos());
+        claims.put("correo", ((Usuario) user).getCorreo());
+        return getToken(claims, user);
     }
 
     private String getToken(Map<String , Object > extraClaims, UserDetails user) {
-        // TODO Auto-generated method stub
         return Jwts.builder()
             .claims(extraClaims)
             .subject(user.getUsername())
@@ -44,6 +47,16 @@ public class JwtService {
 
     public String getUsernameFromToken(String token) {
         return getClaim(token, Claims::getSubject);
+    }
+
+    public Usuario getUsuarioFromToken(String token) {
+        Claims claims = Jwts.parser()
+            .verifyWith(getKey())
+            .build().parseSignedClaims(token).getPayload();
+        String correo = (String) claims.get("correo");
+        String nombre = (String) claims.get("nombre");
+        String apellidos = (String) claims.get("apellidos");
+        return new Usuario(correo, null, nombre, apellidos, null);
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
