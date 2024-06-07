@@ -17,9 +17,11 @@ import kairya.tga.tgaREST.dto.ProductoDto;
 import kairya.tga.tgaREST.model.Categoria;
 import kairya.tga.tgaREST.model.Oferta;
 import kairya.tga.tgaREST.model.Producto;
+import kairya.tga.tgaREST.model.UsuarioOferta;
 import kairya.tga.tgaREST.serviceimp.CategoriaServiceImp;
 import kairya.tga.tgaREST.serviceimp.OfertaServiceImp;
 import kairya.tga.tgaREST.serviceimp.ProductoServiceImp;
+import kairya.tga.tgaREST.serviceimp.UsuarioOfertaServiceImp;
 
 @RestController
 @RequestMapping("tga/common/api/read")
@@ -33,6 +35,9 @@ public class TgaPublicController {
 	
 	@Autowired
 	private OfertaServiceImp ofertaService;
+
+	@Autowired
+	private UsuarioOfertaServiceImp ofertaServiceImp;
 
 	HashMap<String, Object> body = new HashMap<String, Object>();
 	
@@ -92,13 +97,27 @@ public class TgaPublicController {
 		return new ResponseEntity<>(oferta, HttpStatus.OK);
 	}
 	
-	@GetMapping("/ofertas")
-	public ResponseEntity<HashMap<String,Object>> listOfertas(){
+	@GetMapping("/ofertas/{correo}")
+	public ResponseEntity<HashMap<String,Object>> listOfertas(@PathVariable String correo){
 		ArrayList<Oferta> ofertas = ofertaService.listOfertas();
+		ArrayList<UsuarioOferta> usuarioOfertas = ofertaServiceImp.findByCorreo(correo);
 		ArrayList<OfertaDto> ofertasDto = new ArrayList<OfertaDto>();
-		for(Oferta oferta : ofertas) {
-			OfertaDto ofertaDto = new OfertaDto(oferta);
-			ofertasDto.add(ofertaDto);
+		if(usuarioOfertas == null || usuarioOfertas.isEmpty()){
+			for(Oferta oferta : ofertas) {
+				OfertaDto ofertaDto = new OfertaDto(oferta);
+				ofertasDto.add(ofertaDto);
+			}
+		}else{
+			for(Oferta oferta : ofertas){
+				boolean comprobadorExistencia = false;
+				for(UsuarioOferta usuarioOferta : usuarioOfertas){
+					if(usuarioOferta.getOferta().getId() == oferta.getId() && !usuarioOferta.getActivo()) comprobadorExistencia = true;
+				}
+				if(!comprobadorExistencia){
+					OfertaDto ofertaDto = new OfertaDto(oferta);
+					ofertasDto.add(ofertaDto);
+				}
+			}
 		}
 		body.put("data", ofertasDto);
 		return new ResponseEntity<>(body, HttpStatus.OK);

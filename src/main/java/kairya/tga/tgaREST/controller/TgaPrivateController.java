@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import kairya.tga.tgaREST.dto.UsuarioDto;
 import kairya.tga.tgaREST.jwt.JwtService;
 import kairya.tga.tgaREST.model.Usuario;
+import kairya.tga.tgaREST.service.IUsuarioService;
 
 
 
@@ -22,6 +23,9 @@ public class TgaPrivateController {
 	@Autowired
     private JwtService jwtService;
 
+	@Autowired
+	private IUsuarioService usuarioService;
+
 	@GetMapping("/")
 	public ResponseEntity<String> findCategoria(){
 		return new ResponseEntity<>("Wlcome to private endpoint", HttpStatus.OK);
@@ -29,8 +33,9 @@ public class TgaPrivateController {
 
 	@GetMapping("/me")
     public ResponseEntity<UsuarioDto> getUserDetails(@RequestHeader(name = "Authorization") String token) {
-        String jwtToken = token.substring(7); // Quita el prefijo "Bearer "
-        Usuario usuario = jwtService.getUsuarioFromToken(jwtToken);
+        String jwtToken = token.substring(7);
+		String correo = jwtService.getUsernameFromToken(jwtToken);
+        Usuario usuario = usuarioService.findUsuario(correo);
 		UsuarioDto usuarioDto = new UsuarioDto(usuario);
         return new ResponseEntity<>(usuarioDto, HttpStatus.OK);
     }

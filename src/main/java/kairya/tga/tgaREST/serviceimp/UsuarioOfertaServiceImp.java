@@ -1,5 +1,6 @@
 package kairya.tga.tgaREST.serviceimp;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,4 +28,8 @@ public class UsuarioOfertaServiceImp implements IUsuarioOfertaService{
         return repository.save(usuarioPromocion);
     }
 
+    @Override
+    public ArrayList<UsuarioOferta> findByCorreo(String correo) {
+        return repository.findByCorreo(correo);
+    }
 }

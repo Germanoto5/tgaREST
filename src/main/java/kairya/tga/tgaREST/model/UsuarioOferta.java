@@ -10,7 +10,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "usuario_promocion")
+@Table(name = "usuario_oferta")
 public class UsuarioOferta {
 
     @EmbeddedId
@@ -32,6 +32,9 @@ public class UsuarioOferta {
 
     @Column(name = "tiempo_para_canjear_nuevamente")
     private LocalDateTime tiempoParaCanjearNuevamente;
+
+	@Column(name = "activo")
+	private Boolean activo;
 
 	public UsuarioOfertaId getId() {
 		return id;
@@ -79,6 +82,14 @@ public class UsuarioOferta {
 
 	public void setTiempoParaCanjearNuevamente(LocalDateTime tiempoParaCanjearNuevamente) {
 		this.tiempoParaCanjearNuevamente = tiempoParaCanjearNuevamente;
+	}
+
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
 	}
 
 }

@@ -13,7 +13,7 @@ public class UsuarioOfertaId implements Serializable {
     private String correo;
 
     @Column(name = "oferta_id")
-    private Long promocionId;
+    private Long oferta_id;
 
     @Override
     public boolean equals(Object o) {
@@ -21,12 +21,12 @@ public class UsuarioOfertaId implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         UsuarioOfertaId that = (UsuarioOfertaId) o;
         return Objects.equals(correo, that.correo) &&
-                Objects.equals(promocionId, that.promocionId);
+                Objects.equals(oferta_id, that.oferta_id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(correo, promocionId);
+        return Objects.hash(correo, oferta_id);
     }
 
 	public String getCorreo() {
@@ -37,11 +37,11 @@ public class UsuarioOfertaId implements Serializable {
 		this.correo = correo;
 	}
 
-	public Long getPromocionId() {
-		return promocionId;
+	public Long getOfertaId() {
+		return oferta_id;
 	}
 
-	public void setPromocionId(Long promocionId) {
-		this.promocionId = promocionId;
+	public void setOfertaId(Long promocionId) {
+		this.oferta_id = promocionId;
 	}
 }
