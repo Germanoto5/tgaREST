@@ -13,7 +13,7 @@ public class UsuarioOfertaId implements Serializable {
     private String correo;
 
     @Column(name = "oferta_id")
-    private Long oferta_id;
+    private int oferta_id;
 
     @Override
     public boolean equals(Object o) {
@@ -37,11 +37,11 @@ public class UsuarioOfertaId implements Serializable {
 		this.correo = correo;
 	}
 
-	public Long getOfertaId() {
+	public int getOfertaId() {
 		return oferta_id;
 	}
 
-	public void setOfertaId(Long promocionId) {
+	public void setOfertaId(int promocionId) {
 		this.oferta_id = promocionId;
 	}
 }

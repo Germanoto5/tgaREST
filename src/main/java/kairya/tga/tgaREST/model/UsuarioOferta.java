@@ -30,11 +30,20 @@ public class UsuarioOferta {
     @Column(name = "tiempo_para_gastar")
     private LocalDateTime tiempoParaGastar;
 
-    @Column(name = "tiempo_para_canjear_nuevamente")
-    private LocalDateTime tiempoParaCanjearNuevamente;
-
 	@Column(name = "activo")
 	private Boolean activo;
+
+	public UsuarioOferta(String correo, int idOferta, String codigo, LocalDateTime tiempoParaGastar, Boolean activo ){
+		UsuarioOfertaId id = new UsuarioOfertaId();
+		id.setCorreo(correo);
+		id.setOfertaId(idOferta);
+		this.id = id;
+		this.codigo = codigo;
+		this.tiempoParaGastar = tiempoParaGastar;
+		this.activo = activo;
+	}
+
+	public UsuarioOferta(){}
 
 	public UsuarioOfertaId getId() {
 		return id;
@@ -74,14 +83,6 @@ public class UsuarioOferta {
 
 	public void setTiempoParaGastar(LocalDateTime tiempoParaGastar) {
 		this.tiempoParaGastar = tiempoParaGastar;
-	}
-
-	public LocalDateTime getTiempoParaCanjearNuevamente() {
-		return tiempoParaCanjearNuevamente;
-	}
-
-	public void setTiempoParaCanjearNuevamente(LocalDateTime tiempoParaCanjearNuevamente) {
-		this.tiempoParaCanjearNuevamente = tiempoParaCanjearNuevamente;
 	}
 
 	public Boolean getActivo() {

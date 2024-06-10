@@ -14,11 +14,9 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -53,12 +51,12 @@ public class Oferta implements Serializable {
     private BigDecimal descuento;
     @Basic(optional = false)
     @Column(name = "fecha_inicio")
-    @Temporal(TemporalType.DATE)
-    private Date fechaInicio;
+    private LocalDateTime fechaInicio;
     @Basic(optional = false)
     @Column(name = "fecha_fin")
-    @Temporal(TemporalType.DATE)
-    private Date fechaFin;
+    private LocalDateTime fechaFin;
+    @Column(name = "imagen")
+    private String imagen;
 
     public Oferta() {
     }
@@ -67,7 +65,7 @@ public class Oferta implements Serializable {
         this.id = id;
     }
 
-    public Oferta(Integer id, String nombre, BigDecimal descuento, Date fechaInicio, Date fechaFin) {
+    public Oferta(Integer id, String nombre, BigDecimal descuento, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
         this.id = id;
         this.nombre = nombre;
         this.descuento = descuento;
@@ -107,20 +105,28 @@ public class Oferta implements Serializable {
         this.descuento = descuento;
     }
 
-    public Date getFechaInicio() {
+    public LocalDateTime getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
+    public void setFechaInicio(LocalDateTime fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public Date getFechaFin() {
+    public LocalDateTime getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(Date fechaFin) {
+    public void setFechaFin(LocalDateTime fechaFin) {
         this.fechaFin = fechaFin;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     @Override
