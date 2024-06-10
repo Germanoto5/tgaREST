@@ -36,6 +36,6 @@ public class UsuarioOfertaServiceImp implements IUsuarioOfertaService{
     @Override
     public UsuarioOferta findByCodigo(String codigo) {
         Optional<UsuarioOferta> usuarioOferta = repository.findByCodigo(codigo);
-        return usuarioOferta.isPresent() ? usuarioOferta.get() : new UsuarioOferta();
+        return usuarioOferta.isPresent() ? usuarioOferta.get() : null;
     }
 }

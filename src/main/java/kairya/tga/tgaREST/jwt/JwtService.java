@@ -22,7 +22,6 @@ public class JwtService {
     private static final String SECRET_KEY = "1nn6FLCOuSAnzUsob9lSsBq5z2gTbhoz-ygO2jRvILU";
 
     public String getToken(UserDetails user) {
-        // TODO Auto-generated method stub
         return getToken(new HashMap<>(), user);
     }
 
@@ -31,7 +30,7 @@ public class JwtService {
             .claims(extraClaims)
             .subject(user.getUsername())
             .issuedAt(new Date(System.currentTimeMillis()))
-            .expiration(new Date(System.currentTimeMillis()+1000*60*24))
+            .expiration(new Date(System.currentTimeMillis()+1000 * 60 * 60 * 24))
             .signWith(getKey())
             .compact();
     }
