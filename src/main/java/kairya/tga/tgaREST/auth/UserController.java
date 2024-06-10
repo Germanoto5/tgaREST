@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("tga/common/api/user")
+@RequestMapping("api/authentication")
 @RequiredArgsConstructor
 public class UserController {
 	

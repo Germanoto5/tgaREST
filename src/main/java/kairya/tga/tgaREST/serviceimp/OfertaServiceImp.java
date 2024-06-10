@@ -24,7 +24,6 @@ public class OfertaServiceImp implements IOfertaService{
 
 	
 	public ArrayList<Oferta> listOfertas() {
-		// TODO Auto-generated method stub
 		return (ArrayList<Oferta>) repository.findAll();
 	}
 }

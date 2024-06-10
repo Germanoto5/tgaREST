@@ -25,13 +25,11 @@ public class ProductoServiceImp implements IProductoService{
 	
 	@Override
 	public ArrayList<Producto> listProductos() {
-		// TODO Auto-generated method stub
 		return (ArrayList<Producto>) repository.findAll();
 	}
 
 	@Override
 	public ArrayList<Producto> listProductosByCategorias(Categoria categoria) {
-		// TODO Auto-generated method stub
 		return (ArrayList<Producto>) repository.findByCategoria(categoria.getId());
 	}
 

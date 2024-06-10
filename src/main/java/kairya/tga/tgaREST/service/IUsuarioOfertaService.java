@@ -9,4 +9,5 @@ public interface IUsuarioOfertaService {
     UsuarioOferta findUsuarioOferta(UsuarioOfertaId id);
     UsuarioOferta guardarUsuarioPromocion(UsuarioOferta usuarioOferta);
     ArrayList<UsuarioOferta> findByCorreo(String correo);
+    UsuarioOferta findByCodigo(String codigo);
 }

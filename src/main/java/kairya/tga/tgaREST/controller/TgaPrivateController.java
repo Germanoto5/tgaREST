@@ -30,6 +30,7 @@ import kairya.tga.tgaREST.service.IUsuarioService;
 import kairya.tga.tgaREST.serviceimp.CategoriaServiceImp;
 import kairya.tga.tgaREST.serviceimp.OfertaServiceImp;
 import kairya.tga.tgaREST.serviceimp.ProductoServiceImp;
+import kairya.tga.tgaREST.utils.Utils;
 
 
 
@@ -73,7 +74,17 @@ public class TgaPrivateController {
 				return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 			}
 		}
-		UsuarioOferta usuarioOferta = new UsuarioOferta(correo,idPromotion,"123456",LocalDateTime.now().plusMinutes(15),true);
+		boolean iCodigoUsuarioOfertaExists = false;
+		String codigo;
+		do{
+			codigo = Utils.generateRandomCode();
+			UsuarioOferta comprobarUsuarioOferta = UsuarioOfertaServiceImp.findByCodigo(codigo);
+			if(comprobarUsuarioOferta == null){
+				iCodigoUsuarioOfertaExists = true;
+			}
+		}while(!iCodigoUsuarioOfertaExists);
+		
+		UsuarioOferta usuarioOferta = new UsuarioOferta(correo,idPromotion,codigo,LocalDateTime.now().plusMinutes(15),true);
 		UsuarioOfertaServiceImp.guardarUsuarioPromocion(usuarioOferta);
 		changeActivoUsuarioOferta(usuarioOferta);
 		return new ResponseEntity<>(usuarioOferta.getCodigo(),HttpStatus.CREATED);

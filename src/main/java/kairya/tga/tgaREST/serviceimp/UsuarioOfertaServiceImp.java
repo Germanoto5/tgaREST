@@ -32,4 +32,10 @@ public class UsuarioOfertaServiceImp implements IUsuarioOfertaService{
     public ArrayList<UsuarioOferta> findByCorreo(String correo) {
         return repository.findByCorreo(correo);
     }
+
+    @Override
+    public UsuarioOferta findByCodigo(String codigo) {
+        Optional<UsuarioOferta> usuarioOferta = repository.findByCodigo(codigo);
+        return usuarioOferta.isPresent() ? usuarioOferta.get() : new UsuarioOferta();
+    }
 }

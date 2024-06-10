@@ -1,6 +1,7 @@
 package kairya.tga.tgaREST.repository;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,4 +16,7 @@ public interface IUsuarioOfertaRepository extends JpaRepository<UsuarioOferta , 
 
     @Query("SELECT u FROM UsuarioOferta u WHERE u.usuario.correo = :correo")
 	ArrayList<UsuarioOferta> findByCorreo(@Param("correo") String correo);
+
+    @Query("SELECT u FROM UsuarioOferta u WHERE u.codigo = :codigo")
+	Optional<UsuarioOferta> findByCodigo(@Param("codigo") String codigo);
 }

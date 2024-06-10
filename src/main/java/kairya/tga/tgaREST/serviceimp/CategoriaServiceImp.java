@@ -24,7 +24,6 @@ public class CategoriaServiceImp implements ICategoriaService{
 
 	@Override
 	public ArrayList<Categoria> listCategorias() {
-		// TODO Auto-generated method stub
 		return (ArrayList<Categoria>) repository.findAll();
 	}
 
