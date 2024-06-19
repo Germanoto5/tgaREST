@@ -28,7 +28,6 @@ import java.time.LocalDateTime;
     @NamedQuery(name = "Oferta.findAll", query = "SELECT o FROM Oferta o"),
     @NamedQuery(name = "Oferta.findById", query = "SELECT o FROM Oferta o WHERE o.id = :id"),
     @NamedQuery(name = "Oferta.findByNombre", query = "SELECT o FROM Oferta o WHERE o.nombre = :nombre"),
-    @NamedQuery(name = "Oferta.findByDescuento", query = "SELECT o FROM Oferta o WHERE o.descuento = :descuento"),
     @NamedQuery(name = "Oferta.findByFechaInicio", query = "SELECT o FROM Oferta o WHERE o.fechaInicio = :fechaInicio"),
     @NamedQuery(name = "Oferta.findByFechaFin", query = "SELECT o FROM Oferta o WHERE o.fechaFin = :fechaFin")})
 public class Oferta implements Serializable {
@@ -45,17 +44,13 @@ public class Oferta implements Serializable {
     @Lob
     @Column(name = "descripcion")
     private String descripcion;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @Column(name = "descuento")
-    private BigDecimal descuento;
     @Basic(optional = false)
     @Column(name = "fecha_inicio")
     private LocalDateTime fechaInicio;
     @Basic(optional = false)
     @Column(name = "fecha_fin")
     private LocalDateTime fechaFin;
-    @Column(name = "imagen")
+    @Column(name = "urlimagen")
     private String imagen;
 
     public Oferta() {
@@ -68,7 +63,6 @@ public class Oferta implements Serializable {
     public Oferta(Integer id, String nombre, BigDecimal descuento, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
         this.id = id;
         this.nombre = nombre;
-        this.descuento = descuento;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
     }
@@ -95,14 +89,6 @@ public class Oferta implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public BigDecimal getDescuento() {
-        return descuento;
-    }
-
-    public void setDescuento(BigDecimal descuento) {
-        this.descuento = descuento;
     }
 
     public LocalDateTime getFechaInicio() {

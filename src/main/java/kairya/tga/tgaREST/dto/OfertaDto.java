@@ -1,6 +1,5 @@
 package kairya.tga.tgaREST.dto;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import kairya.tga.tgaREST.model.Oferta;
@@ -10,7 +9,6 @@ public class OfertaDto {
 	private Integer id;
     private String nombre;
     private String descripcion;
-    private BigDecimal descuento;
     private LocalDateTime fechaInicio;
     private LocalDateTime fechaFin;
 	private String imagen;
@@ -22,7 +20,6 @@ public class OfertaDto {
 		this.id = oferta.getId();
 		this.nombre = oferta.getNombre();
 		this.descripcion = oferta.getDescripcion();
-		this.descuento = oferta.getDescuento();
 		this.fechaInicio = oferta.getFechaInicio();
 		this.fechaFin = oferta.getFechaFin();
 		this.imagen = oferta.getImagen();
@@ -45,12 +42,6 @@ public class OfertaDto {
 	}
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}
-	public BigDecimal getDescuento() {
-		return descuento;
-	}
-	public void setDescuento(BigDecimal descuento) {
-		this.descuento = descuento;
 	}
 	public LocalDateTime getFechaInicio() {
 		return fechaInicio;
