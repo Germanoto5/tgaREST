@@ -4,7 +4,7 @@ la autenticación con spring security usando JWT. Esta funcionalidad solo sirve 
 grande con el tiempo.
 <hr/>
 <h3>Configuración del proyecto</h3>
-Para poder probarlo primero tienes que ejecutar el script sql que se encuentra en la carpeta "resources" del proyecto para generar la estructura y los datos de la base de datos.
+Para poder probarlo primero tienes que ejecutar el script sql que se encuentra en la raíz del proyecto para generar la estructura y los datos de la base de datos.
 Luego tendrás que configurar el archivo "application.properties" del proyecto spring.<br/>
 spring.jpa.database=mysql<br/>
 spring.jpa.hibernate.ddl-auto=none<br/>
